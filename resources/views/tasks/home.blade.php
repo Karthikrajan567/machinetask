@@ -10,7 +10,7 @@
         <a class="btn btn-success text-white mb-3" href="{{ route('taskform') }}">Create Project</a>
     @endif
 </div>
-<form method="GET" action="{{ route('projectview') }}" class="mb-3">
+<form method="GET" action="{{ route('taskview') }}" class="mb-3">
     <div class="input-group">
         <input type="text" name="search" class="form-control" placeholder="Search by name">
         <button type="submit" class="btn btn-primary">Search</button>
