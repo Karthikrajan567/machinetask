@@ -17,14 +17,26 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Contracts\View\View the view for the project details
      */
-    public function projectview()
+    public function projectview(Request $request)
     {
         $managers = $this->userdetails('manager');
         $members = $this->userdetails('member');
         $projects = Project::where('company_id',auth()->user()->company_id)
         ->with(['manager', 'member'])
-        ->withTrashed()
-        ->get();
+        ->withTrashed();
+        // Filter by name if a search query is provided
+        if ($request->filled('search')) {
+            $searchTerm = '%' . $request->input('search') . '%';
+            $projects->where(function ($query) use ($searchTerm) {
+                $query->where('project_name', 'like', $searchTerm)
+                    ->orWhere('project_description', 'like', $searchTerm)
+                    ->orWhere('project_start_date', 'like', $searchTerm)
+                    ->orWhere('project_end_date', 'like', $searchTerm)
+                    ->orWhere('project_manager', 'like', $searchTerm)
+                    ->orWhere('project_member', 'like', $searchTerm);
+            });
+        }
+        $projects = $projects->paginate(10);
         return view('projectsdetails.home',compact('members','managers','projects'));
     }
     /**

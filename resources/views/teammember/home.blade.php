@@ -2,9 +2,9 @@
 
 @section('content')
 
-<div class="d-flex">
+<div class="d-flex justify-content-between">
     <h2>Member Details</h2>
-    <a class="btn btn-primary text-white mb-3" href="{{ route('userform') }}">Create Member</a>
+    <a class="btn btn-success text-white mb-3" href="{{ route('userform') }}">Create Member</a>
 </div>
 <form method="GET" action="{{ route('userview') }}" class="mb-3">
     <div class="input-group">

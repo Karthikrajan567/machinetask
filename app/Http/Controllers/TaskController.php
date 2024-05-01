@@ -15,12 +15,23 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Contracts\View\View
      */
-    public function taskview()
+    public function taskview(Request $request)
     {
         $members = $this->userdetails('member');
         $tasks = Task::where('company_id',auth()->user()->company_id)
-        ->with('member')
-        ->get();
+        ->with('member');
+        // Filter by name if a search query is provided
+        if ($request->filled('search')) {
+            $searchTerm = '%' . $request->input('search') . '%';
+            $tasks->where(function ($query) use ($searchTerm) {
+                $query->where('task_name', 'like', $searchTerm)
+                    ->orWhere('task_description', 'like', $searchTerm)
+                    ->orWhere('task_end_date', 'like', $searchTerm)
+                    ->orWhere('task_member', 'like', $searchTerm)
+                    ->orWhere('task_status', 'like', $searchTerm);
+            });
+        }
+        $tasks = $tasks->paginate(10);
         return view('tasks.home',compact('members','tasks'));
     }
     /**

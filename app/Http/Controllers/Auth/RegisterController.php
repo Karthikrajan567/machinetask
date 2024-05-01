@@ -51,7 +51,7 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:30', 'min:2'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:8', 'regex:/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^\w\s]).{8,}$/', 'confirmed'],
         ], $this->messages());
     }
     public function messages()
@@ -66,6 +66,7 @@ class RegisterController extends Controller
             'password.required' => __('message.required'),
             'password.min' => __('message.min'),
             'password.max' => __('message.max'),
+            'password.regex' => __('message.password'),
             'password.confirmed' => __('message.confirmed'),
         ];
     }

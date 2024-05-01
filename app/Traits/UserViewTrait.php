@@ -28,7 +28,11 @@ trait UserViewTrait
 
         // Filter by name if a search query is provided
         if ($request->filled('search')) {
-            $query->where('name', 'like', '%' . $request->input('search') . '%');
+            $searchTerm = '%' . $request->input('search') . '%';
+            $query->where(function ($query) use ($searchTerm) {
+                $query->where('name', 'like', $searchTerm)
+                    ->orWhere('email', 'like', $searchTerm);
+            });
         }
 
         // Paginate the results

@@ -27,7 +27,7 @@ class CreateuserRequest extends FormRequest
         return [
             'name' => 'required|max:30|min:2|regex:/^[a-zA-Z0-9\s]*$/',
             'email' => 'required|email|max:255|unique:users,email',
-            'password' => 'required|min:8|max:16',
+            'password' => 'required|min:8|max:16|regex:/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^\w\s]).{8,}$/',
             'uuid' => '',
             'company_id' => '',
         ];
@@ -47,6 +47,7 @@ class CreateuserRequest extends FormRequest
             'password.required' => __('message.required'),
             'password.min' => __('message.min'),
             'password.max' => __('message.max'),
+            'password.regex' => __('message.password'),
         ];
     }
     public function validated($key = null, $default = null)

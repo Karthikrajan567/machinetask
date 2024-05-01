@@ -2,14 +2,20 @@
 
 @section('content')
 
-<div class="d-flex">
+<div class="d-flex justify-content-between">
     <h2>Project Details</h2>
     @if ($members->count() == 0 || $managers->count() == 0)
-        <button class="btn btn-primary text-white mb-3" id="alert_button">Create Project</button>
+        <button class="btn btn-danger text-white mb-3" id="alert_button">Create Project</button>
     @else
-        <a class="btn btn-primary text-white mb-3" href="{{ route('projectform') }}">Create Project</a>
+        <a class="btn btn-success text-white mb-3" href="{{ route('projectform') }}">Create Project</a>
     @endif
 </div>
+<form method="GET" action="{{ route('projectview') }}" class="mb-3">
+    <div class="input-group">
+        <input type="text" name="search" class="form-control" placeholder="Search by name">
+        <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+</form>
 <div>
     <table class="table">
         <thead>
@@ -41,6 +47,10 @@
             @endforeach
         </tbody>
     </table>
+    <!-- Pagination Links -->
+    <div class="d-flex justify-content-center">
+        {{ $projects->links('pagination::bootstrap-5') }}
+    </div>
 </div>
 @endsection
 @section('js')

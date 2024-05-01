@@ -2,9 +2,9 @@
 
 @section('content')
 
-<div class="d-flex">
+<div class="d-flex justify-content-between">
     <h2>Manager Details</h2>
-    <a class="btn btn-primary text-white mb-3" href="{{ route('admin.managerform') }}">Create manager</a>
+    <a class="btn btn-success text-white mb-3" href="{{ route('admin.managerform') }}">Create manager</a>
 </div>
 <form method="GET" action="{{ route('admin.managerview') }}" class="mb-3">
     <div class="input-group">
