@@ -16,4 +16,3 @@ Credential details:
     Username : "admin@example.com",
     Password : "password"
 # machinetask
-# machinetask
