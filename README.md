@@ -15,4 +15,5 @@ Credential details:
  Admin Login:
     Username : "admin@example.com",
     Password : "password"
+
 # machinetask
